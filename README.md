@@ -1,66 +1,244 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Aksamedia Backend Intern Test
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository was created to fulfill the requirements for the backend internship test at Aksamedia.
 
-## About Laravel
+## Tasks
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   [ ] **Login**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    -   **Method:** POST
+    -   **Endpoint:** /login
+    -   **Expected Request Body:**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    ```json
+    {
+        "username": "admin",
+        "password": "admin"
+    }
+    ```
 
-## Learning Laravel
+    -   **Expected Response:**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    ```json
+    {
+        "status": "success / error",
+        "message": "success / error message",
+        "data": {
+            "token": "authentication token",
+            "admin": {
+                "id": "admin uuid",
+                "name": "admin name",
+                "username": "admin username",
+                "phone": "admin phone number",
+                "email": "admin email"
+            }
+        }
+    }
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   [ ] **Retrieve All Divisions**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    -   **Method:** GET
+    -   **Endpoint:** /divisions
+    -   **Request Header (after login):**
 
-## Laravel Sponsors
+    ```json
+    {
+        "Authorization": "Bearer token"
+    }
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    -   **Expected Query Parameter:**
 
-### Premium Partners
+    ```json
+    {
+        "name": "search name"
+    }
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    -   **Expected Response:**
 
-## Contributing
+    ```json
+    {
+        "status": "success / error",
+        "message": "success / error message",
+        "data": {
+            "divisions": [
+                {
+                    "id": "division uuid",
+                    "name": "division name"
+                },
+                {
+                    "id": "division uuid",
+                    "name": "division name"
+                }
+            ]
+        },
+        "pagination": {
+            "laravel pagination attributes": "..."
+        }
+    }
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   [ ] **Retrieve All Employees**
 
-## Code of Conduct
+    -   **Method:** GET
+    -   **Endpoint:** /employees
+    -   **Request Header (after login):**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```json
+    {
+        "Authorization": "Bearer token"
+    }
+    ```
 
-## Security Vulnerabilities
+    -   **Expected Query Parameter:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```json
+    {
+        "name": "search name",
+        "division_id": "division uuid"
+    }
+    ```
 
-## License
+    -   **Expected Response:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```json
+    {
+        "status": "success / error",
+        "message": "success / error message",
+        "data": {
+            "employees": [
+                {
+                    "id": "employee uuid",
+                    "image": "employee photo url",
+                    "name": "employee name",
+                    "phone": "employee phone number",
+                    "division": {
+                        "id": "division uuid",
+                        "name": "division name"
+                    },
+                    "position": "employee position"
+                },
+                {
+                    "id": "employee uuid",
+                    "image": "employee photo url",
+                    "name": "employee name",
+                    "phone": "employee phone number",
+                    "division": {
+                        "id": "division uuid",
+                        "name": "division name"
+                    },
+                    "position": "employee position"
+                }
+            ]
+        },
+        "pagination": {
+            "laravel pagination attributes": "..."
+        }
+    }
+    ```
+
+-   [ ] **Create New Employee**
+
+    -   **Method:** POST
+    -   **Endpoint:** /employees
+    -   **Request Header (after login):**
+
+    ```json
+    {
+        "Authorization": "Bearer token"
+    }
+    ```
+
+    -   **Expected Request Body:**
+
+    ```json
+    {
+        "image": "employee photo file",
+        "name": "employee name",
+        "phone": "employee phone number",
+        "division": "division uuid",
+        "position": "employee position"
+    }
+    ```
+
+    -   **Expected Response:**
+
+    ```json
+    {
+        "status": "success / error",
+        "message": "success / error message"
+    }
+    ```
+
+-   [ ] **Update Employee**
+
+    -   **Method:** PUT
+    -   **Endpoint:** /employees/{id}
+    -   **Request Header (after login):**
+
+    ```json
+    {
+        "Authorization": "Bearer token"
+    }
+    ```
+
+    -   **Expected Request Body:**
+
+    ```json
+    {
+        "image": "employee photo file",
+        "name": "employee name",
+        "phone": "employee phone number",
+        "division": "division uuid",
+        "position": "employee position"
+    }
+    ```
+
+    -   **Expected Response:**
+
+    ```json
+    {
+        "status": "success / error",
+        "message": "success / error message"
+    }
+    ```
+
+-   [ ] **Delete Employee**
+
+    -   **Method:** DELETE
+    -   **Endpoint:** /employees/{id}
+    -   **Request Header (after login):**
+
+    ```json
+    {
+        "Authorization": "Bearer token"
+    }
+    ```
+
+    -   **Expected Response:**
+
+    ```json
+    {
+        "status": "success / error",
+        "message": "success / error message"
+    }
+    ```
+
+-   [ ] **Logout**
+    -   **Method:** POST
+    -   **Endpoint:** /logout
+    -   **Request Header (after login):**
+    ```json
+    {
+        "Authorization": "Bearer token"
+    }
+    ```
+    -   **Expected Response:**
+    ```json
+    {
+        "status": "success / error",
+        "message": "success / error message"
+    }
+    ```
