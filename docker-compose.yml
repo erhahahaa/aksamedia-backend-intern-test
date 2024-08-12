@@ -1,0 +1,52 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        user: ${DB_USERNAME}
+        uid: 1000
+    container_name: aksamedia_app
+    restart: unless-stopped
+    ports:
+      - "8000:9000"
+    volumes:
+      - .:/var/www
+    networks:
+      - sail
+
+  db:
+    image: mysql:8.0
+    container_name: aksamedia_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - sail
+
+  nginx:
+    image: nginx:latest
+    container_name: aksamedia_server
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - .:/etc/nginx/conf.d
+      - .:/var/www
+    depends_on:
+      - app
+    networks:
+      - sail
+
+networks:
+  sail:
+    driver: bridge
+
+volumes:
+  db_data:
