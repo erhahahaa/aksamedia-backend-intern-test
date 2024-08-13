@@ -3,7 +3,6 @@ services:
     build:
       context: .
       args:
-        user: ${DB_USERNAME}
         uid: 1000
     container_name: aksamedia_app
     restart: unless-stopped
