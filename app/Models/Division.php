@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Division extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  protected $primaryKey = 'id';
+  public $incrementing = false;
+  protected $keyType = 'uuid';
+
+  protected $fillable = [
+    'name',
+  ];
 }
