@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
@@ -54,7 +55,15 @@ class EmployeeController extends Controller
       'position' => 'required|string|max:255',
     ]);
 
-    $employee = Employee::create($validated);
+    $path = $request->file('image')->store('images', 'public');
+    $imageURL = url('storage/' . $path);
+
+
+    $employee = Employee::create([
+      ...$validated,
+      'division_id' => $validated['division'],
+      'image' => $imageURL
+    ]);
 
     return response()->json([
       'status' => 'success',
@@ -84,7 +93,20 @@ class EmployeeController extends Controller
       ], 204);
     }
 
-    $employee->update($validated);
+    if ($request->hasFile('image')) {
+      if ($employee->image && file_exists(storage_path('app/public/' . $employee->image))) {
+        unlink(storage_path('app/public/' . $employee->image));
+      }
+
+      $path = $request->file('image')->store('images', 'public');
+      $imageURL = url('storage/' . $path);
+    }
+
+    $employee->update([
+      ...$validated,
+      'division_id' => $validated['division'],
+      'image' => $imageURL ?? $employee->image
+    ]);
 
     return response()->json([
       'status' => 'success',

@@ -1,0 +1,199 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/auth/login:
+    post:
+      summary: ''
+      operationId: postApiAuthLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: ''
+                  example: aut
+                password:
+                  type: string
+                  description: ''
+                  example: 'M%;?fIN^;7]CcY7^X'
+              required:
+                - username
+                - password
+  /api/auth/logout:
+    post:
+      summary: ''
+      operationId: postApiAuthLogout
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+  /api/divisions:
+    get:
+      summary: ''
+      operationId: getApiDivisions
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+  /api/employees:
+    get:
+      summary: ''
+      operationId: getApiEmployees
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+    post:
+      summary: ''
+      operationId: postApiEmployees
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'Must be an image.'
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: jujbsqayynldolqunc
+                phone:
+                  type: string
+                  description: 'Must not be greater than 15 characters.'
+                  example: tfuuqia
+                division:
+                  type: string
+                  description: ''
+                  example: illo
+                position:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: gldtwogffadmeqqity
+              required:
+                - image
+                - name
+                - phone
+                - division
+                - position
+  '/api/employees/{id}':
+    put:
+      summary: ''
+      operationId: putApiEmployeesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'Must be an image.'
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: dwcagsesqveuowmjfvajhi
+                phone:
+                  type: string
+                  description: 'Must not be greater than 15 characters.'
+                  example: huhn
+                division:
+                  type: string
+                  description: ''
+                  example: facere
+                position:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: bgtigofsub
+              required:
+                - name
+                - phone
+                - division
+                - position
+    delete:
+      summary: ''
+      operationId: deleteApiEmployeesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the employee.'
+        example: ut
+        required: true
+        schema:
+          type: string
+tags:
+  -
+    name: Endpoints
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.'
+security:
+  -
+    default: []

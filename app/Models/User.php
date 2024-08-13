@@ -6,12 +6,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-  use HasFactory, Notifiable;
+  use HasFactory, Notifiable, HasApiTokens;
 
-  protected $keyType = 'string';
+  protected $keyType = 'uuid';
   public $incrementing = false;
   protected $primaryKey = 'id';
 
@@ -37,6 +39,18 @@ class User extends Authenticatable
     'password',
     'remember_token',
   ];
+
+
+  protected static function boot()
+  {
+    parent::boot();
+
+    static::creating(function ($model) {
+      if (empty($model->{$model->getKeyName()})) {
+        $model->{$model->getKeyName()} = (string) Str::uuid();
+      }
+    });
+  }
 
   /**
    * Get the attributes that should be cast.

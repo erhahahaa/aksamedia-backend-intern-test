@@ -17,8 +17,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN composer install
 
-RUN chown -R 777 www-data:www-data /var/www/storage /var/www/bootstrap/cache \
-    && chmod -R 777 /var/www/storage /var/www/bootstrap/cache
+RUN chmod -R 777 /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 9000
 
