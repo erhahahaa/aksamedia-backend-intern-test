@@ -22,6 +22,13 @@ class EmployeeController extends Controller
 
     $employees = $query->paginate();
 
+    if ($employees->isEmpty()) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Data not found'
+      ], 204);
+    }
+
     return response()->json([
       'status' => 'success',
       'message' => 'Data retrieved successfully',
@@ -74,7 +81,7 @@ class EmployeeController extends Controller
       return response()->json([
         'status' => 'error',
         'message' => 'Employee not found'
-      ], 404);
+      ], 204);
     }
 
     $employee->update($validated);
@@ -93,7 +100,7 @@ class EmployeeController extends Controller
       return response()->json([
         'status' => 'error',
         'message' => 'Employee not found'
-      ], 404);
+      ], 204);
     }
 
     if ($employee->image && file_exists(storage_path('app/public/' . $employee->image))) {

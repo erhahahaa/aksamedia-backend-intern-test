@@ -18,6 +18,12 @@ class DivisionController extends Controller
 
     $divisions = $query->paginate();
 
+    if (!$divisions->items()) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Data not found'
+      ], 204);
+    }
 
     return response()->json([
       'status' => 'success',
